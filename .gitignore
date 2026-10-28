@@ -1,0 +1,6 @@
+# Ignore old duplicate backup files
+nfxweb2.html
+
+# Ignore temporary files
+*.tmp
+*.log

@@ -3389,6 +3389,10 @@
     };
   })();
 
+  // DOM Elements for Showcase (defined at top so all loops and functions can access safely)
+  const showcaseView = document.getElementById('projectShowcaseView');
+  let makeReactiveHeading = null;
+
   // ---------- custom cursor + magnetic buttons + background parallax (single rAF loop) ----------
   if (finePointer && !reduceMotion){
     document.body.classList.add('fine-pointer');
@@ -3405,7 +3409,7 @@
     // Unified reactive headings engine (Hero + Work + About + Statement + Contact + Showcase)
     const reactiveHeadings = [];
 
-    function makeReactiveHeading(el){
+    makeReactiveHeading = function(el){
       if (!el) return null;
       const text = el.getAttribute('data-reactive-text') || el.textContent.trim();
       el.setAttribute('data-reactive-text', text);
@@ -3577,7 +3581,7 @@
         if (h.isHero && !heroIntroDone) return;
         const hb = h.el.getBoundingClientRect();
         // Viewport culling: only process headings near visible screen
-        if (h.inShowcase && showcaseView && !showcaseView.classList.contains('active')) return;
+        if (h.inShowcase && (!showcaseView || !showcaseView.classList.contains('active'))) return;
         if (hb.bottom < -80 || hb.top > window.innerHeight + 80) return;
 
         const pad = h.font * 1.2;
@@ -3855,7 +3859,7 @@
     };
 
     // DOM Elements for Showcase
-    const showcaseView = document.getElementById('projectShowcaseView');
+    // showcaseView defined at top
     const showcaseBackBtn = document.getElementById('showcaseBackBtn');
     const showcaseVideo = document.getElementById('showcaseVideo');
     const showcaseTheater = document.getElementById('showcaseTheater');

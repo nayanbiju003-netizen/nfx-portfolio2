@@ -291,7 +291,7 @@
     top: 0; left: 0;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 70;
+    z-index: 999999;
     transform: translate(-50%, -50%);
   }
   .cursor-dot{
@@ -3790,6 +3790,22 @@
         ring.classList.remove('hovering');
         ring.textContent = '';
       });
+    });
+
+    // Delegation to ensure all dynamically loaded showcase elements expand the cursor ring
+    document.addEventListener('mouseover', (e) => {
+      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card');
+      if (el) {
+        ring.classList.add('hovering');
+        ring.textContent = el.dataset.cursorLabel || el.getAttribute('aria-label') || '';
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card');
+      if (el) {
+        ring.classList.remove('hovering');
+        ring.textContent = '';
+      }
     });
 
     function tick(){

@@ -68,6 +68,20 @@
     --max: 1160px;
   }
 
+  /* Remove scrollbars and eliminate all layout shifting/jumping */
+  html, body, .project-showcase-view, *{
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .project-showcase-view::-webkit-scrollbar,
+  *::-webkit-scrollbar{
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+  }
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
   section[id]{ scroll-margin-top: 70px; }

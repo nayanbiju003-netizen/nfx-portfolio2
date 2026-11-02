@@ -1624,33 +1624,117 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
+  }
+  .nav-actions-right{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .showcase-sound-toggle{
+    flex-shrink: 0;
   }
   .project-name-badge{
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     color: var(--cyan);
-    padding: 7px 18px;
+    padding: 8px 20px;
     background: rgba(51, 230, 255, 0.08);
-    border: 1px solid rgba(51, 230, 255, 0.35);
+    border: 1px solid rgba(51, 230, 255, 0.38);
     border-radius: 999px;
-    box-shadow: 0 0 16px rgba(51, 230, 255, 0.2);
+    box-shadow: 0 0 18px rgba(51, 230, 255, 0.22), inset 0 0 10px rgba(51, 230, 255, 0.06);
+    cursor: default;
+    transition: all 0.28s var(--ease);
+    user-select: none;
+  }
+  .project-name-badge:hover{
+    background: rgba(51, 230, 255, 0.16);
+    border-color: var(--cyan);
+    color: #ffffff;
+    box-shadow: 0 0 28px rgba(51, 230, 255, 0.42), inset 0 0 16px rgba(51, 230, 255, 0.14);
+    transform: translateY(-2px) scale(1.03);
+  }
+  .category-dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan);
+    animation: pulse 2.2s infinite ease-in-out;
   }
   .project-section-big-title{
-    font-size: clamp(40px, 6.2vw, 82px);
+    font-size: clamp(40px, 6.2vw, 84px);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.05;
     text-transform: uppercase;
     margin: 14px 0 18px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--cyan-soft) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 50px rgba(51, 230, 255, 0.22);
+    position: relative;
+    color: #ffffff;
+    display: block;
+    user-select: none;
+    cursor: default;
+  }
+  .project-section-big-title .char{
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow:
+      0 0 calc(var(--g, 0) * 36px) rgb(51 230 255 / calc(var(--g, 0) * 0.95)),
+      0 0 calc(var(--g, 0) * 12px) rgb(255 255 255 / 0.85),
+      0 0 32px rgba(51, 230, 255, 0.25);
+    transition: text-shadow 0.1s ease;
+  }
+  .project-section-big-title::before{
+    content: '';
+    position: absolute;
+    inset: -220px -260px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+    background: radial-gradient(320px circle at calc(var(--mx, 0px) + 260px) calc(var(--my, 0px) + 220px),
+      rgba(51, 230, 255, 0.24),
+      rgba(140, 111, 255, 0.12) 48%,
+      transparent 72%);
+  }
+  .project-section-big-title.is-hot::before{
+    opacity: 1;
+  }
+  .project-tagline{
+    font-size: clamp(17px, 1.8vw, 22px);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 820px;
+    margin-bottom: 34px;
+    position: relative;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    transition: all 0.3s var(--ease);
+    cursor: default;
+  }
+  .project-tagline:hover{
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(51, 230, 255, 0.22);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 24px rgba(51, 230, 255, 0.08);
+  }
+  .stills-section h3.reactive-heading,
+  .breakdown-story h3.reactive-heading{
+    position: relative;
+    display: inline-block;
+    cursor: default;
+  }
+  .stills-section h3.reactive-heading .char,
+  .breakdown-story h3.reactive-heading .char{
+    color: #ffffff;
+    text-shadow:
+      0 0 calc(var(--g, 0) * 26px) rgb(51 230 255 / calc(var(--g, 0) * 0.9)),
+      0 0 calc(var(--g, 0) * 8px) rgb(255 255 255 / 0.7);
+    transition: text-shadow 0.1s ease;
   }
   .project-eyebrow-row{
     display: flex;
@@ -1994,424 +2078,7 @@
   }
   .lightbox-close:hover{ background: var(--cyan); color: #000; transform: scale(1.1); }
 </style>
-<noscript><style>.loader{display:none} html.is-loading, body.loading{overflow:auto}
-  /* ---------- In-Page Project Showcase View (Zero-Reload Smooth Zoom) ---------- */
-  .project-showcase-view{
-    position: fixed;
-    inset: 0;
-    z-index: 1200;
-    background: rgba(16, 18, 28, 0.98);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transform: scale(0.8);
-    transform-origin: center center;
-    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.45s;
-    will-change: transform, opacity;
-  }
-  .project-showcase-view.active{
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
-    transform: scale(1);
-  }
-  .project-showcase-view.animating-out{
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.8);
-    transition: opacity 0.38s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.38s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-  .showcase-nav{
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background: rgba(16, 18, 28, 0.88);
-    border-bottom: 1px solid var(--line);
-    padding: 16px 0;
-  }
-  .showcase-nav-inner{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .project-name-badge{
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--cyan);
-    padding: 7px 18px;
-    background: rgba(51, 230, 255, 0.08);
-    border: 1px solid rgba(51, 230, 255, 0.35);
-    border-radius: 999px;
-    box-shadow: 0 0 16px rgba(51, 230, 255, 0.2);
-  }
-  .project-section-big-title{
-    font-size: clamp(40px, 6.2vw, 82px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    text-transform: uppercase;
-    margin: 14px 0 18px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--cyan-soft) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 50px rgba(51, 230, 255, 0.22);
-  }
-  .project-eyebrow-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 8px;
-  }
-  .showcase-content{
-    padding-bottom: 80px;
-  }
-  .theater-container{
-    position: relative;
-    width: 100%;
-    border-radius: 28px;
-    overflow: hidden;
-    background: #000;
-    border: 1px solid rgba(127, 240, 255, 0.22);
-    box-shadow: 0 28px 70px -15px rgba(0, 0, 0, 0.8), 0 0 50px -10px var(--cyan-glow);
-    margin: 36px 0 48px;
-    aspect-ratio: 16 / 9;
-  }
-  .theater-container .video-element{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    background: #07090e;
-  }
-  .meta-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 24px 28px;
-    background: rgba(243, 244, 248, 0.02);
-    border: 1px solid rgba(243, 244, 248, 0.08);
-    border-radius: 20px;
-    margin: 28px 0;
-    backdrop-filter: blur(8px);
-  }
-  .meta-col h5{
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--cyan-soft);
-    margin-bottom: 6px;
-  }
-  .meta-col p{
-    font-size: 14.5px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .tool-tags-mini{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
-  }
-  .tool-tag-pill{
-    font-size: 11.5px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 6px;
-    background: rgba(140, 111, 255, 0.12);
-    border: 1px solid rgba(140, 111, 255, 0.3);
-    color: var(--violet-soft);
-  }
-  .upload-hint-banner{
-    background: linear-gradient(135deg, rgba(20, 24, 38, 0.9) 0%, rgba(12, 14, 23, 0.95) 100%);
-    border: 1px dashed rgba(51, 230, 255, 0.35);
-    border-radius: 18px;
-    padding: 20px 26px;
-    margin: 28px 0 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .hint-left{ display: flex; align-items: center; gap: 14px; }
-  .hint-icon{
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: rgba(51, 230, 255, 0.12);
-    border: 1px solid var(--cyan);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--cyan);
-    flex-shrink: 0;
-  }
-  .hint-text h6{ font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
-  .hint-text p{ font-size: 12.5px; color: var(--ink-soft); line-height: 1.45; }
-  .hint-code{
-    font-family: monospace;
-    color: var(--cyan);
-    background: rgba(0, 0, 0, 0.4);
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid rgba(51, 230, 255, 0.2);
-  }
-  .stills-section{ margin-bottom: 64px; }
-  .section-title-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
-  .section-title-row h3{ font-size: clamp(22px, 3vw, 32px); font-weight: 700; }
-  .section-title-row p{ font-size: 14px; color: var(--ink-soft); }
-  .stills-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  .still-card{
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    cursor: pointer;
-    aspect-ratio: 16 / 9;
-    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
-  }
-  .still-card:hover{
-    transform: translateY(-5px) scale(1.02);
-    border-color: rgba(51, 230, 255, 0.45);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -10px var(--cyan-glow);
-  }
-  .still-img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
-  .still-card:hover .still-img{ transform: scale(1.08); }
-  .still-overlay{
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(16, 18, 28, 0.9) 0%, transparent 60%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 16px 18px;
-    opacity: 0;
-    transition: opacity 0.3s var(--ease);
-  }
-  .still-card:hover .still-overlay{ opacity: 1; }
-  .still-overlay h5{ font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 3px; }
-  .still-overlay span{ font-size: 11px; color: var(--cyan-soft); font-weight: 500; }
-  .breakdown-section{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 64px;
-    align-items: start;
-  }
-  .breakdown-story h3{ font-size: clamp(22px, 2.8vw, 30px); font-weight: 700; margin-bottom: 16px; }
-  .breakdown-story p{ font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); margin-bottom: 16px; }
-  .breakdown-cards{ display: flex; flex-direction: column; gap: 16px; }
-  .breakdown-card{
-    padding: 22px 24px;
-    background: rgba(243, 244, 248, 0.02);
-    border: 1px solid rgba(243, 244, 248, 0.08);
-    border-left: 3px solid var(--cyan);
-    border-radius: 16px;
-    transition: all 0.3s var(--ease);
-  }
-  .breakdown-card:hover{
-    background: rgba(51, 230, 255, 0.04);
-    border-color: rgba(51, 230, 255, 0.3);
-    border-left-color: var(--cyan);
-    transform: translateX(4px);
-  }
-  .breakdown-card h4{ font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .breakdown-card p{ font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
-  .project-pagination{
-    border-top: 1px solid var(--line);
-    padding: 40px 0 20px;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .nav-card{
-    flex: 1;
-    min-width: 260px;
-    padding: 24px 28px;
-    background: rgba(243, 244, 248, 0.02);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    text-decoration: none;
-    color: var(--ink);
-    transition: all 0.35s var(--ease);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-  }
-  .nav-card:hover{
-    background: rgba(51, 230, 255, 0.05);
-    border-color: rgba(51, 230, 255, 0.4);
-    transform: translateY(-3px);
-  }
-  .nav-card-label{ font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan-soft); }
-  .nav-card-title{ font-size: 20px; font-weight: 700; }
-  .back-btn{
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--cyan-soft);
-    text-decoration: none;
-    padding: 8px 18px;
-    background: rgba(51, 230, 255, 0.05);
-    border: 1px solid rgba(51, 230, 255, 0.22);
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all 0.3s var(--ease);
-  }
-  .back-btn:hover{
-    background: rgba(51, 230, 255, 0.15);
-    border-color: var(--cyan);
-    color: #fff;
-    transform: translateX(-3px);
-    box-shadow: 0 0 20px rgba(51, 230, 255, 0.25);
-  }
-  .back-arrow{ font-size: 16px; transition: transform 0.3s var(--ease); }
-  .back-btn:hover .back-arrow{ transform: translateX(-3px); }
-  .quick-switch-btn{
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    text-decoration: none;
-    padding: 6px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: rgba(243, 244, 248, 0.02);
-    cursor: pointer;
-    transition: all 0.25s var(--ease);
-  }
-  .quick-switch-btn:hover{
-    color: var(--ink);
-    border-color: rgba(243, 244, 248, 0.3);
-    background: rgba(243, 244, 248, 0.06);
-  }
-  .resolution-badge{
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: #000;
-    background: var(--cyan);
-    padding: 4px 10px;
-    border-radius: 6px;
-    box-shadow: 0 0 14px var(--cyan);
-  }
-  .center-play-btn{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(16, 18, 28, 0.7);
-    border: 2px solid var(--cyan);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    pointer-events: auto;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 35px var(--cyan-glow);
-    transition: transform 0.3s var(--ease-bounce), background 0.3s var(--ease), border-color 0.3s var(--ease);
-  }
-  .center-play-btn:hover{
-    transform: translate(-50%, -50%) scale(1.12);
-    background: var(--cyan);
-    color: #000;
-  }
-  .center-play-btn svg{ width: 30px; height: 30px; fill: currentColor; transform: translateX(2px); }
-  .theater-container.playing .center-play-btn{ opacity: 0; pointer-events: none; }
-  .player-overlay{
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 22px 26px;
-    background: linear-gradient(to bottom, rgba(16, 18, 28, 0.4) 0%, transparent 20%, transparent 75%, rgba(16, 18, 28, 0.85) 100%);
-    pointer-events: none;
-    transition: opacity 0.3s var(--ease);
-  }
-  .theater-container:hover .player-overlay,
-  .theater-container.paused .player-overlay{ opacity: 1; }
-  .player-top{ display: flex; justify-content: space-between; align-items: center; pointer-events: auto; }
-  .player-bottom-bar{ display: flex; align-items: center; gap: 16px; pointer-events: auto; }
-  .control-btn{
-    background: none; border: none; color: #fff; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    padding: 6px; border-radius: 50%;
-    transition: transform 0.2s var(--ease), color 0.2s var(--ease);
-  }
-  .control-btn:hover{ color: var(--cyan); transform: scale(1.15); }
-  .control-btn svg{ width: 20px; height: 20px; fill: currentColor; }
-  .progress-track{
-    flex: 1; height: 6px; background: rgba(255, 255, 255, 0.2);
-    border-radius: 999px; position: relative; cursor: pointer; overflow: hidden;
-  }
-  .progress-fill{
-    position: absolute; top: 0; left: 0; bottom: 0; width: 0%;
-    background: linear-gradient(90deg, var(--cyan), var(--violet));
-    border-radius: 999px; transition: width 0.1s linear;
-  }
-  .time-readout{
-    font-size: 12px; font-weight: 600; color: var(--ink-soft);
-    letter-spacing: 0.05em; min-width: 80px; text-align: right;
-  }
-  .category-dot{
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--cyan); box-shadow: 0 0 10px var(--cyan);
-  }
-  .lightbox{
-    position: fixed; inset: 0; background: rgba(8, 10, 16, 0.94);
-    backdrop-filter: blur(20px); z-index: 1500; display: flex;
-    align-items: center; justify-content: center; padding: 40px;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease);
-  }
-  .lightbox.active{ opacity: 1; pointer-events: auto; }
-  .lightbox-content{
-    max-width: 90vw; max-height: 85vh; border-radius: 16px;
-    overflow: hidden; box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-  .lightbox-img{ max-width: 100%; max-height: 85vh; display: block; object-fit: contain; }
-  .lightbox-close{
-    position: absolute; top: 24px; right: 28px; background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; font-size: 26px;
-    width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; cursor: pointer; transition: all 0.2s var(--ease);
-  }
-  .lightbox-close:hover{ background: var(--cyan); color: #000; transform: scale(1.1); }
-</style></noscript>
+<noscript><style>.loader{display:none} html.is-loading, body.loading{overflow:auto}</style></noscript>
 </head>
 <body class="loading">
 
@@ -2806,8 +2473,14 @@
           </button>
           <span class="wordmark">Nayan</span>
         </div>
-        <div class="nav-right" id="showcaseNavSwitcher">
-          <!-- Quick switch buttons for all projects -->
+        <div class="nav-actions-right">
+          <div class="nav-right" id="showcaseNavSwitcher">
+            <!-- Quick switch buttons for all projects -->
+          </div>
+          <button class="sound-toggle showcase-sound-toggle" id="showcaseSoundToggle" type="button" aria-pressed="false" aria-label="Sound off, click to turn on" data-cursor>
+            <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span>Sound</span>
+          </button>
         </div>
       </div>
     </header>
@@ -2815,16 +2488,16 @@
     <div class="wrap showcase-content">
       <section class="project-header">
         <div class="project-eyebrow-row">
-          <span class="project-name-badge">
+          <span class="project-name-badge" id="showcaseBadge" data-cursor data-cursor-label="Project">
             <span class="category-dot"></span>
             <span id="showcaseSmallName">NEBULA</span>
           </span>
-          <span class="project-year" id="showcaseYear">2026 â€¢ Real-Time Lighting Study</span>
+          <span class="project-year" id="showcaseYear">2026 &bull; Real-Time Lighting Study</span>
         </div>
 
-        <!-- Big Section Name as requested by user -->
-        <h1 class="project-section-big-title" id="showcaseBigSection">3D RENDER</h1>
-        <p class="project-tagline" id="showcaseTagline">A cinematic CGI environment and volumetric lighting study exploring atmosphere, procedural scattering, and high-contrast composition.</p>
+        <!-- Big Section Name as requested by user with reactive proximity glow -->
+        <h1 class="project-section-big-title reactive-heading" id="showcaseBigSection">3D RENDER</h1>
+        <p class="project-tagline interactive-copy" id="showcaseTagline" data-cursor data-cursor-label="Story">A cinematic CGI environment and volumetric lighting study exploring atmosphere, procedural scattering, and high-contrast composition.</p>
 
         <!-- Meta Grid -->
         <div class="meta-grid">
@@ -2857,12 +2530,12 @@
               <span class="resolution-badge">4K ULTRA HD â€¢ 60 FPS</span>
             </div>
 
-            <div class="center-play-btn" id="showcaseCenterPlayBtn" title="Play Video">
+            <div class="center-play-btn" id="showcaseCenterPlayBtn" title="Play Video" data-cursor data-cursor-label="Play">
               <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             </div>
 
             <div class="player-bottom-bar">
-              <button class="control-btn" id="showcasePlayPauseBtn" title="Play/Pause">
+              <button class="control-btn" id="showcasePlayPauseBtn" title="Play/Pause" data-cursor data-cursor-label="Play">
                 <svg id="showcasePlayIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 <svg id="showcasePauseIcon" style="display:none;" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
               </button>
@@ -2870,11 +2543,11 @@
                 <div class="progress-fill" id="showcaseProgressFill"></div>
               </div>
               <span class="time-readout" id="showcaseTimeReadout">0:00 / 0:00</span>
-              <button class="control-btn" id="showcaseMuteBtn" title="Mute/Unmute">
+              <button class="control-btn" id="showcaseMuteBtn" title="Mute/Unmute" data-cursor data-cursor-label="Audio">
                 <svg id="showcaseVolIcon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                 <svg id="showcaseMuteIcon" style="display:none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
               </button>
-              <button class="control-btn" id="showcaseFullscreenBtn" title="Fullscreen">
+              <button class="control-btn" id="showcaseFullscreenBtn" title="Fullscreen" data-cursor data-cursor-label="Fullscreen">
                 <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
               </button>
             </div>
@@ -2900,7 +2573,7 @@
       <section class="stills-section" id="showcaseStillsSection">
         <div class="section-title-row">
           <div>
-            <h3>Production Stills &amp; Keyframes</h3>
+            <h3 class="reactive-heading" id="showcaseStillsHeading">Production Stills &amp; Keyframes</h3>
             <p>Click any thumbnail to inspect high-resolution render details, lighting passes, and wireframes.</p>
           </div>
         </div>
@@ -2910,7 +2583,7 @@
       <!-- Story & Breakdown -->
       <section class="breakdown-section">
         <div class="breakdown-story">
-          <h3>Vision &amp; Methodology</h3>
+          <h3 class="reactive-heading" id="showcaseStoryHeading">Vision &amp; Methodology</h3>
           <div id="showcaseStoryParagraphs"></div>
         </div>
         <div class="breakdown-cards" id="showcaseBreakdownCards"></div>
@@ -2918,11 +2591,11 @@
 
       <!-- Prev / Next Project Navigation -->
       <section class="project-pagination">
-        <button type="button" class="nav-card" id="showcasePrevCard" style="text-align: left;">
+        <button type="button" class="nav-card" id="showcasePrevCard" style="text-align: left;" data-cursor data-cursor-label="Previous">
           <span class="nav-card-label">&larr; Previous Project</span>
           <span class="nav-card-title" id="showcasePrevTitle">Terraform</span>
         </button>
-        <button type="button" class="nav-card" id="showcaseNextCard" style="text-align: right;">
+        <button type="button" class="nav-card" id="showcaseNextCard" style="text-align: right;" data-cursor data-cursor-label="Next">
           <span class="nav-card-label">Next Project &rarr;</span>
           <span class="nav-card-title" id="showcaseNextTitle">Pulse</span>
         </button>
@@ -2932,7 +2605,7 @@
 
   <!-- Showcase Lightbox Modal -->
   <div class="lightbox" id="showcaseLightbox">
-    <button class="lightbox-close" id="showcaseLightboxClose">&times;</button>
+    <button class="lightbox-close" id="showcaseLightboxClose" data-cursor data-cursor-label="Close">&times;</button>
     <div class="lightbox-content">
       <img src="" alt="Enlarged Render Still" class="lightbox-img" id="showcaseLightboxImg">
     </div>
@@ -3568,7 +3241,7 @@
   // ===== engine end =====
 
   const sound = (() => {
-    const btn = document.getElementById('soundToggle');
+    const getSoundBtns = () => [document.getElementById('soundToggle'), document.getElementById('showcaseSoundToggle')].filter(Boolean);
     const fine = window.matchMedia('(pointer: fine)').matches;
     const KEY = 'nfx-sound';
     const store = {
@@ -3582,8 +3255,10 @@
     const gap = (ms) => { const n = performance.now(); if (n - lastHover < ms) return false; lastHover = n; return true; };
 
     function ui(){
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Sound on, click to turn off' : 'Sound off, click to turn on');
+      getSoundBtns().forEach(b => {
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.setAttribute('aria-label', on ? 'Sound on, click to turn off' : 'Sound off, click to turn on');
+      });
     }
 
     function ensure(){
@@ -3653,7 +3328,11 @@
       }
     }
 
-    btn.addEventListener('click', () => { ready() ? disable() : enable(true); });
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#soundToggle, #showcaseSoundToggle')){
+        ready() ? disable() : enable(true);
+      }
+    });
 
     document.addEventListener('visibilitychange', () => {
       if (!ctx || !on) return;
@@ -3665,8 +3344,11 @@
       document.querySelectorAll('.project-tile').forEach((tile, i) => {
         tile.addEventListener('mouseenter', () => { if (ready() && gap(30)) eng.tile(i); });
       });
-      document.querySelectorAll('.btn, .nav-links a, .wordmark, .social-list a, .skill-tags span, .sound-toggle, .kicker, .hint-pill, .interactive-copy, .back-to-top, .tool-3d-card, .ambient-tool').forEach(el => {
-        el.addEventListener('mouseenter', () => { if (ready() && gap(35)) eng.tick(); });
+      document.addEventListener('mouseover', (e) => {
+        const el = e.target.closest('.btn, .nav-links a, .wordmark, .social-list a, .skill-tags span, .sound-toggle, .kicker, .hint-pill, .interactive-copy, .back-to-top, .tool-3d-card, .ambient-tool, .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card, .breakdown-card, .project-name-badge, .tool-tag-pill, .meta-col');
+        if (el && ready() && gap(35)) {
+          eng.tick();
+        }
       });
     }
     document.querySelectorAll('.project-tile').forEach(tile => {
@@ -3720,8 +3402,57 @@
     const heroEl = document.getElementById('top');
     const headline = document.getElementById('heroHeadline');
 
-    // Unified reactive headings engine (Hero + Work + About + Statement + Contact)
+    // Unified reactive headings engine (Hero + Work + About + Statement + Contact + Showcase)
     const reactiveHeadings = [];
+
+    function makeReactiveHeading(el){
+      if (!el) return null;
+      const text = el.getAttribute('data-reactive-text') || el.textContent.trim();
+      el.setAttribute('data-reactive-text', text);
+      el.setAttribute('aria-label', text);
+      el.innerHTML = '';
+      const words = text.split(/\s+/);
+      const chars = [];
+      words.forEach((w, wi) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'char-word';
+        w.split('').forEach(ch => {
+          const span = document.createElement('span');
+          span.className = 'char in';
+          span.textContent = ch;
+          wordSpan.appendChild(span);
+          chars.push({ el: span, s: 1, g: 0 });
+        });
+        el.appendChild(wordSpan);
+        if (wi < words.length - 1){
+          const space = document.createElement('span');
+          space.className = 'char space';
+          space.textContent = ' ';
+          el.appendChild(space);
+        }
+      });
+      el.classList.add('reactive-ready');
+      const inShowcase = !!el.closest('#projectShowcaseView');
+      const font = parseFloat(getComputedStyle(el).fontSize) || 40;
+
+      const existingIdx = reactiveHeadings.findIndex(h => h.el === el);
+      const headingData = {
+        el,
+        chars,
+        font,
+        settled: false,
+        lastLetter: -1,
+        isHero: false,
+        inShowcase
+      };
+      if (existingIdx >= 0) {
+        reactiveHeadings[existingIdx] = headingData;
+      } else {
+        reactiveHeadings.push(headingData);
+      }
+      return headingData;
+    }
+
     function setupReactiveHeadings(){
       // 1. Hero headline (characters already structured into .char-line)
       if (headline){
@@ -3732,43 +3463,13 @@
           font: parseFloat(getComputedStyle(headline).fontSize) || 60,
           settled: true,
           lastLetter: -1,
-          isHero: true
+          isHero: true,
+          inShowcase: false
         });
       }
       // 2. All lower main headings
       document.querySelectorAll('.reactive-heading:not(#heroHeadline)').forEach(el => {
-        const text = el.getAttribute('aria-label') || el.textContent.trim();
-        el.setAttribute('aria-label', text);
-        el.innerHTML = '';
-        const words = text.split(/\s+/);
-        const chars = [];
-        words.forEach((w, wi) => {
-          const wordSpan = document.createElement('span');
-          wordSpan.className = 'char-word';
-          w.split('').forEach(ch => {
-            const span = document.createElement('span');
-            span.className = 'char in';
-            span.textContent = ch;
-            wordSpan.appendChild(span);
-            chars.push({ el: span, s: 1, g: 0 });
-          });
-          el.appendChild(wordSpan);
-          if (wi < words.length - 1){
-            const space = document.createElement('span');
-            space.className = 'char space';
-            space.textContent = ' ';
-            el.appendChild(space);
-          }
-        });
-        el.classList.add('reactive-ready');
-        reactiveHeadings.push({
-          el,
-          chars,
-          font: parseFloat(getComputedStyle(el).fontSize) || 40,
-          settled: true,
-          lastLetter: -1,
-          isHero: false
-        });
+        makeReactiveHeading(el);
       });
     }
     setupReactiveHeadings();
@@ -3876,6 +3577,7 @@
         if (h.isHero && !heroIntroDone) return;
         const hb = h.el.getBoundingClientRect();
         // Viewport culling: only process headings near visible screen
+        if (h.inShowcase && showcaseView && !showcaseView.classList.contains('active')) return;
         if (hb.bottom < -80 || hb.top > window.innerHeight + 80) return;
 
         const pad = h.font * 1.2;
@@ -3919,13 +3621,14 @@
     }
     tick();
 
-    // Dynamic interactive copy cursor illumination
-    document.querySelectorAll('.interactive-copy').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
+    // Dynamic interactive copy cursor illumination (with delegation for showcase elements)
+    document.addEventListener('mousemove', (e) => {
+      const card = e.target.closest('.interactive-copy, .breakdown-card, .meta-col');
+      if (card) {
         const rect = card.getBoundingClientRect();
         card.style.setProperty('--cx', (e.clientX - rect.left) + 'px');
         card.style.setProperty('--cy', (e.clientY - rect.top) + 'px');
-      });
+      }
     });
 
     // magnetic buttons
@@ -4176,8 +3879,21 @@
     function renderShowcaseData(p){
       // Big Section & Small Name (as requested: "3D Render" big word, "Nebula" small word on top)
       document.getElementById('showcaseSmallName').textContent = p.smallName;
-      document.getElementById('showcaseBigSection').textContent = p.bigSection;
-      document.getElementById('showcaseYear').textContent = p.year;
+
+      // Render Big Section title with reactive proximity Gaussian physics & cyan glow
+      const bigTitleEl = document.getElementById('showcaseBigSection');
+      bigTitleEl.removeAttribute('data-reactive-text');
+      bigTitleEl.textContent = p.bigSection;
+      bigTitleEl.classList.add('reactive-heading');
+      if (typeof makeReactiveHeading === 'function'){
+        makeReactiveHeading(bigTitleEl);
+        const stillsH = document.getElementById('showcaseStillsHeading');
+        if (stillsH) makeReactiveHeading(stillsH);
+        const storyH = document.getElementById('showcaseStoryHeading');
+        if (storyH) makeReactiveHeading(storyH);
+      }
+
+      document.getElementById('showcaseYear').innerHTML = p.year.replace('Ã¢â‚¬Â¢', '&bull;');
       document.getElementById('showcaseTagline').textContent = p.tagline;
 
       // Meta
@@ -4237,6 +3953,7 @@
         card.innerHTML = '<img src="' + stillSvg + '" alt="' + s.caption + '" class="still-img"><div class="still-overlay"><h5>' + s.caption + '</h5><span>' + s.tag + ' â€¢ Inspect Fullscreen</span></div>';
 
         card.addEventListener('click', () => {
+          if (sound.ready()) sound.press();
           showcaseLightboxImg.src = stillSvg;
           showcaseLightbox.classList.add('active');
         });
@@ -4258,6 +3975,7 @@
         }
         btn.textContent = item.smallName;
         btn.addEventListener('click', () => {
+          if (sound.ready()) sound.glint();
           renderShowcaseData(item);
           showcaseView.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -4270,6 +3988,7 @@
       if (prevP){
         document.getElementById('showcasePrevTitle').textContent = prevP.smallName + ' (' + prevP.bigSection + ')';
         document.getElementById('showcasePrevCard').onclick = () => {
+          if (sound.ready()) sound.glint();
           renderShowcaseData(prevP);
           showcaseView.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -4277,16 +3996,22 @@
       if (nextP){
         document.getElementById('showcaseNextTitle').textContent = nextP.smallName + ' (' + nextP.bigSection + ')';
         document.getElementById('showcaseNextCard').onclick = () => {
+          if (sound.ready()) sound.glint();
           renderShowcaseData(nextP);
           showcaseView.scrollTo({ top: 0, behavior: 'smooth' });
         };
       }
     }
 
-    // Smooth Zoom-In Animation from Clicked Tile
+    // Smooth Zoom-In Animation from Clicked Tile with cinematic audio cues
     function openShowcase(pid, tileEl){
       const p = SHOWCASE_PROJECTS[pid] || SHOWCASE_PROJECTS['nebula'];
       currentOpenTile = tileEl;
+
+      if (sound.ready()){
+        sound.press();
+        setTimeout(() => { if (sound.ready()) sound.glint(); }, 140);
+      }
 
       // Calculate origin for smooth zoom
       if (tileEl){
@@ -4311,6 +4036,8 @@
     // Smooth Zoom-Out Animation back to Portfolio (Zero Page Reload)
     function closeShowcase(){
       if (!showcaseView.classList.contains('active')) return;
+
+      if (sound.ready()) sound.click();
 
       // Pause video if playing
       showcaseVideo.pause();
@@ -4347,10 +4074,16 @@
       });
     }
 
-    // Lightbox Close
-    showcaseLightboxClose.addEventListener('click', () => showcaseLightbox.classList.remove('active'));
+    // Lightbox Close with sound
+    showcaseLightboxClose.addEventListener('click', () => {
+      if (sound.ready()) sound.click();
+      showcaseLightbox.classList.remove('active');
+    });
     showcaseLightbox.addEventListener('click', (e) => {
-      if (e.target === showcaseLightbox) showcaseLightbox.classList.remove('active');
+      if (e.target === showcaseLightbox){
+        if (sound.ready()) sound.click();
+        showcaseLightbox.classList.remove('active');
+      }
     });
 
     // Video Player Play/Pause

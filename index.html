@@ -1963,22 +1963,39 @@
   }
   .back-arrow{ font-size: 16px; transition: transform 0.3s var(--ease); }
   .back-btn:hover .back-arrow{ transform: translateX(-3px); }
+  #showcaseNavSwitcher{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
   .quick-switch-btn{
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--ink-soft);
     text-decoration: none;
-    padding: 6px 14px;
+    padding: 7px 15px;
     border-radius: 999px;
-    border: 1px solid var(--line);
-    background: rgba(243, 244, 248, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(243, 244, 248, 0.03);
     cursor: pointer;
+    white-space: nowrap;
     transition: all 0.25s var(--ease);
   }
   .quick-switch-btn:hover{
-    color: var(--ink);
-    border-color: rgba(243, 244, 248, 0.3);
-    background: rgba(243, 244, 248, 0.06);
+    color: #fff;
+    border-color: var(--cyan);
+    background: rgba(51, 230, 255, 0.14);
+    box-shadow: 0 0 16px rgba(51, 230, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  .quick-switch-btn.active{
+    border-color: var(--cyan) !important;
+    color: #fff !important;
+    background: rgba(51, 230, 255, 0.18) !important;
+    box-shadow: 0 0 18px rgba(51, 230, 255, 0.35) !important;
   }
   .resolution-badge{
     font-size: 11px;
@@ -2593,11 +2610,11 @@
       <section class="project-pagination">
         <button type="button" class="nav-card" id="showcasePrevCard" style="text-align: left;" data-cursor data-cursor-label="Previous">
           <span class="nav-card-label">&larr; Previous Project</span>
-          <span class="nav-card-title" id="showcasePrevTitle">Terraform</span>
+          <span class="nav-card-title" id="showcasePrevTitle">UNREAL ENGINE</span>
         </button>
         <button type="button" class="nav-card" id="showcaseNextCard" style="text-align: right;" data-cursor data-cursor-label="Next">
           <span class="nav-card-label">Next Project &rarr;</span>
-          <span class="nav-card-title" id="showcaseNextTitle">Pulse</span>
+          <span class="nav-card-title" id="showcaseNextTitle">MOTION GRAPHICS</span>
         </button>
       </section>
     </div>
@@ -3964,7 +3981,7 @@
         stillsEl.appendChild(card);
       });
 
-      // Header Quick Switchers
+      // Header Quick Switchers (Uses original section names: 3D RENDER, MOTION GRAPHICS, AI VIDEO, etc.)
       const switcher = document.getElementById('showcaseNavSwitcher');
       switcher.innerHTML = '';
       Object.keys(SHOWCASE_PROJECTS).forEach(pid => {
@@ -3972,12 +3989,12 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'quick-switch-btn';
+        btn.setAttribute('data-cursor', '');
+        btn.setAttribute('data-cursor-label', item.bigSection);
         if (item.id === p.id){
-          btn.style.borderColor = 'var(--cyan)';
-          btn.style.color = '#fff';
-          btn.style.background = 'rgba(51, 230, 255, 0.12)';
+          btn.classList.add('active');
         }
-        btn.textContent = item.smallName;
+        btn.textContent = item.bigSection;
         btn.addEventListener('click', () => {
           if (sound.ready()) sound.glint();
           renderShowcaseData(item);
@@ -3990,7 +4007,7 @@
       const prevP = SHOWCASE_PROJECTS[p.prev];
       const nextP = SHOWCASE_PROJECTS[p.next];
       if (prevP){
-        document.getElementById('showcasePrevTitle').textContent = prevP.smallName + ' (' + prevP.bigSection + ')';
+        document.getElementById('showcasePrevTitle').textContent = prevP.bigSection;
         document.getElementById('showcasePrevCard').onclick = () => {
           if (sound.ready()) sound.glint();
           renderShowcaseData(prevP);
@@ -3998,7 +4015,7 @@
         };
       }
       if (nextP){
-        document.getElementById('showcaseNextTitle').textContent = nextP.smallName + ' (' + nextP.bigSection + ')';
+        document.getElementById('showcaseNextTitle').textContent = nextP.bigSection;
         document.getElementById('showcaseNextCard').onclick = () => {
           if (sound.ready()) sound.glint();
           renderShowcaseData(nextP);
@@ -4182,6 +4199,12 @@
       });
     }
 
+        // Pre-populate showcase with initial project so nav switcher and content are ready
+    try {
+      if (typeof SHOWCASE_PROJECTS !== 'undefined' && SHOWCASE_PROJECTS['nebula']){
+        renderShowcaseData(SHOWCASE_PROJECTS['nebula']);
+      }
+    } catch (e) {}
     // Attach Click Event with Smooth Zoom-In on Project Tiles
     document.querySelectorAll('.project-tile').forEach(tile => {
       tile.addEventListener('click', (e) => {

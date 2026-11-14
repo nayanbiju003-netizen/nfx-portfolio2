@@ -68,9 +68,9 @@ try {
             $request = $context.Request
             $response = $context.Response
 
-            $rawUrl = $request.RawUrl.Split('?')[0]
+            $decodedUrl = [System.Uri]::UnescapeDataString($request.RawUrl.Split('?')[0])
 
-            if ($rawUrl -eq '/__livereload__') {
+            if ($decodedUrl -eq '/__livereload__') {
                 $files = Get-ChildItem -Path $Directory -Filter "*.*" -File -Recurse | Where-Object { $_.Extension -match '\.(html|htm|css|js)$' }
                 $latest = 0
                 foreach ($f in $files) {
@@ -87,7 +87,7 @@ try {
             }
 
             # Resolve local file path
-            $relPath = $rawUrl.TrimStart('/')
+            $relPath = $decodedUrl.TrimStart('/')
             if (-not $relPath -or $relPath -eq '') { $relPath = 'index.html' }
             $filePath = Join-Path $Directory $relPath
 

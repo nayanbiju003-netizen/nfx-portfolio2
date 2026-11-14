@@ -305,7 +305,7 @@
     top: 0; left: 0;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 999999;
+    z-index: 2147483647;
     transform: translate(-50%, -50%);
   }
   .cursor-dot{
@@ -2278,7 +2278,7 @@
   .video-cinema-modal{
     position: fixed;
     inset: 0;
-    z-index: 9999999;
+    z-index: 2500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2345,6 +2345,23 @@
     border-radius: 0 !important;
     border: none !important;
     background: #000 !important;
+    cursor: auto !important;
+  }
+  .cinema-dialog:fullscreen *,
+  .cinema-dialog:-webkit-full-screen *{
+    cursor: auto;
+  }
+  .cinema-dialog:fullscreen button,
+  .cinema-dialog:-webkit-full-screen button,
+  .cinema-dialog:fullscreen .cinema-ctrl-btn,
+  .cinema-dialog:-webkit-full-screen .cinema-ctrl-btn,
+  .cinema-dialog:fullscreen .cinema-close-btn,
+  .cinema-dialog:-webkit-full-screen .cinema-close-btn,
+  .cinema-dialog:fullscreen .cinema-center-btn,
+  .cinema-dialog:-webkit-full-screen .cinema-center-btn,
+  .cinema-dialog:fullscreen .cinema-scrubber,
+  .cinema-dialog:-webkit-full-screen .cinema-scrubber{
+    cursor: pointer !important;
   }
   .cinema-dialog:fullscreen .cinema-stage,
   .cinema-dialog:-webkit-full-screen .cinema-stage{
@@ -3079,7 +3096,7 @@
   </div>
   <!-- Big Video Cinema Popup Modal with Blurred Background -->
   <div class="video-cinema-modal" id="videoCinemaModal" aria-hidden="true">
-    <div class="cinema-backdrop" id="cinemaBackdrop"></div>
+    <div class="cinema-backdrop" id="cinemaBackdrop" data-cursor data-cursor-label="Close"></div>
     
     <div class="cinema-dialog is-portrait" id="cinemaDialog">
       <div class="cinema-topbar">
@@ -3095,7 +3112,7 @@
         </div>
       </div>
 
-      <div class="cinema-stage" id="cinemaStage">
+      <div class="cinema-stage" id="cinemaStage" data-cursor data-cursor-label="Play">
         <video class="cinema-video" id="cinemaVideo" playsinline preload="auto"></video>
 
         <div class="cinema-center-btn" id="cinemaCenterBtn" title="Play/Pause" data-cursor data-cursor-label="Play">
@@ -3110,7 +3127,7 @@
           <svg id="cinemaIconPause" style="display:none;" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
         </button>
 
-        <div class="cinema-scrubber" id="cinemaScrubber">
+        <div class="cinema-scrubber" id="cinemaScrubber" data-cursor data-cursor-label="Seek">
           <div class="cinema-progress-fill" id="cinemaProgressFill"></div>
         </div>
 
@@ -4028,16 +4045,16 @@
       });
     });
 
-    // Delegation to ensure all dynamically loaded showcase elements expand the cursor ring
+    // Delegation to ensure all dynamically loaded showcase & cinema modal elements expand the cursor ring
     document.addEventListener('mouseover', (e) => {
-      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card');
+      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card, .cinema-ctrl-btn, .cinema-close-btn, .cinema-center-btn, .video-thumb-card, .cinema-scrubber, .cinema-stage, .cinema-backdrop');
       if (el) {
         ring.classList.add('hovering');
         ring.textContent = el.dataset.cursorLabel || el.getAttribute('aria-label') || '';
       }
     });
     document.addEventListener('mouseout', (e) => {
-      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card');
+      const el = e.target.closest('[data-cursor], .back-btn, .quick-switch-btn, .control-btn, .center-play-btn, .still-card, .nav-card, .cinema-ctrl-btn, .cinema-close-btn, .cinema-center-btn, .video-thumb-card, .cinema-scrubber, .cinema-stage, .cinema-backdrop');
       if (el) {
         ring.classList.remove('hovering');
         ring.textContent = '';
@@ -4940,6 +4957,18 @@
         cinemaProgressFill.style.width = pct + '%';
         cinemaTimeReadout.textContent = formatTime(cinemaVideo.currentTime) + ' / ' + formatTime(cinemaVideo.duration);
       }
+    });
+
+    cinemaVideo.addEventListener('play', () => {
+      cinemaStage.setAttribute('data-cursor-label', 'Pause');
+      cinemaPlayPauseBtn.setAttribute('data-cursor-label', 'Pause');
+      cinemaCenterBtn.setAttribute('data-cursor-label', 'Pause');
+    });
+
+    cinemaVideo.addEventListener('pause', () => {
+      cinemaStage.setAttribute('data-cursor-label', 'Play');
+      cinemaPlayPauseBtn.setAttribute('data-cursor-label', 'Play');
+      cinemaCenterBtn.setAttribute('data-cursor-label', 'Play');
     });
 
     cinemaVideo.addEventListener('ended', () => {

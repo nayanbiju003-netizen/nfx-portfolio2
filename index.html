@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
   PORTFOLIO TEMPLATE — how to customize
   1. Search "nayanbiju.design" / "hello@yourdomain.com" and swap in your real
@@ -2094,6 +2094,449 @@
     justify-content: center; cursor: pointer; transition: all 0.2s var(--ease);
   }
   .lightbox-close:hover{ background: var(--cyan); color: #000; transform: scale(1.1); }
+
+  /* ============================================================
+     VIDEO GALLERY GRID (Rows with Names Below Thumbnails)
+     ============================================================ */
+  .video-grid-section{
+    margin: 36px 0 40px;
+    padding: 32px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .video-grid-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .video-grid-header .kicker-mini{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .video-grid-title{
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 6px;
+  }
+  .video-grid-subtitle{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .video-grid-count{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(51, 230, 255, 0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(51, 230, 255, 0.3);
+  }
+  .video-gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 32px 24px;
+  }
+  @media (max-width: 640px) {
+    .video-gallery-grid{
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px 14px;
+    }
+  }
+  .video-thumb-card{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border-radius: 16px;
+    user-select: none;
+    transition: transform 0.28s var(--ease);
+  }
+  .video-thumb-card:hover{
+    transform: translateY(-6px);
+  }
+  .thumb-frame-wrap{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #090b14;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .video-thumb-card.is-landscape .thumb-frame-wrap{
+    aspect-ratio: 16 / 9;
+  }
+  .video-thumb-card:hover .thumb-frame-wrap{
+    border-color: var(--cyan);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55), 0 0 24px rgba(51, 230, 255, 0.35);
+  }
+  .thumb-first-frame{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    transition: transform 0.4s var(--ease);
+    background: #090b14;
+  }
+  .video-thumb-card:hover .thumb-first-frame{
+    transform: scale(1.05);
+  }
+  .thumb-aspect-tag{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.72);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+  .thumb-play-btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(14, 18, 30, 0.75);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.25s var(--ease);
+    backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+  .video-thumb-card:hover .thumb-play-btn{
+    transform: translate(-50%, -50%) scale(1.15);
+    background: var(--cyan);
+    color: #000;
+    border-color: var(--cyan);
+    box-shadow: 0 0 24px var(--cyan);
+  }
+  .thumb-play-btn svg{
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    margin-left: 3px;
+  }
+  .thumb-details{
+    padding: 12px 2px 2px;
+  }
+  .thumb-title{
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+    line-height: 1.38;
+    transition: color 0.2s var(--ease);
+  }
+  .video-thumb-card:hover .thumb-title{
+    color: var(--cyan);
+  }
+  .thumb-meta-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+  .thumb-client{
+    font-weight: 700;
+    color: var(--cyan);
+    background: rgba(51, 230, 255, 0.08);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(51, 230, 255, 0.2);
+  }
+  .thumb-tag{
+    color: var(--ink-soft);
+  }
+
+  /* ============================================================
+     BIG VIDEO CINEMA POPUP MODAL (Blurred Background & Adaptive 9:16/16:9)
+     ============================================================ */
+  .video-cinema-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .video-cinema-modal.active{
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .cinema-backdrop{
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 7, 12, 0.88);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    cursor: pointer;
+  }
+  .cinema-dialog{
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    background: rgba(13, 16, 26, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 35px 90px rgba(0, 0, 0, 0.9), 0 0 45px rgba(51, 230, 255, 0.18);
+    transform: scale(0.92);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .video-cinema-modal.active .cinema-dialog{
+    transform: scale(1);
+  }
+
+  /* 9:16 Portrait Adaptability */
+  .cinema-dialog.is-portrait{
+    width: min(88vw, calc((90vh - 120px) * 9 / 16));
+    max-height: 94vh;
+  }
+  .cinema-dialog.is-portrait .cinema-stage{
+    aspect-ratio: 9 / 16;
+    max-height: calc(90vh - 120px);
+  }
+
+  /* 16:9 Landscape Adaptability */
+  .cinema-dialog.is-landscape{
+    width: min(92vw, 1120px);
+    max-height: 90vh;
+  }
+  .cinema-dialog.is-landscape .cinema-stage{
+    aspect-ratio: 16 / 9;
+    max-height: calc(85vh - 120px);
+  }
+
+  /* Fullscreen Mode */
+  .cinema-dialog:fullscreen,
+  .cinema-dialog:-webkit-full-screen{
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background: #000 !important;
+  }
+  .cinema-dialog:fullscreen .cinema-stage,
+  .cinema-dialog:-webkit-full-screen .cinema-stage{
+    flex: 1;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+  }
+
+  .cinema-topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: rgba(16, 20, 32, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 14px;
+  }
+  .cinema-title-wrap{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .cinema-kicker{
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+  .cinema-title{
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin: 2px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cinema-topbar-actions{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .cinema-aspect-badge{
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(51, 230, 255, 0.12);
+    color: var(--cyan);
+    border: 1px solid rgba(51, 230, 255, 0.3);
+  }
+  .cinema-close-btn{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+  }
+  .cinema-close-btn:hover{
+    background: var(--cyan);
+    color: #000;
+    border-color: var(--cyan);
+    transform: scale(1.1);
+  }
+  .cinema-close-btn svg{
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+  }
+
+  .cinema-stage{
+    position: relative;
+    width: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .cinema-video{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .cinema-center-btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(12, 15, 25, 0.72);
+    border: 2px solid var(--cyan);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 35px var(--cyan-glow);
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .cinema-stage.playing .cinema-center-btn{
+    opacity: 0;
+    pointer-events: none;
+  }
+  .cinema-stage:hover.playing .cinema-center-btn{
+    opacity: 0.85;
+    pointer-events: auto;
+  }
+  .cinema-center-btn:hover{
+    transform: translate(-50%, -50%) scale(1.1);
+    background: var(--cyan);
+    color: #000;
+  }
+  .cinema-center-btn svg{
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+    margin-left: 3px;
+  }
+
+  .cinema-controls-bar{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    background: rgba(16, 20, 32, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .cinema-ctrl-btn{
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .cinema-ctrl-btn:hover{
+    color: var(--cyan);
+    transform: scale(1.15);
+  }
+  .cinema-ctrl-btn svg{
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  .cinema-scrubber{
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .cinema-progress-fill{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    border-radius: 999px;
+    transition: width 0.08s linear;
+  }
+  .cinema-time-readout{
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    min-width: 76px;
+    text-align: right;
+  }
 </style>
 <noscript><style>.loader{display:none} html.is-loading, body.loading{overflow:auto}</style></noscript>
 </head>
@@ -2536,7 +2979,7 @@
 
           <div class="player-overlay" id="showcasePlayerOverlay">
             <div class="player-top">
-              <span class="resolution-badge">4K ULTRA HD â€¢ 60 FPS</span>
+              <span class="resolution-badge">4K ULTRA HD  -  60 FPS</span>
             </div>
 
             <div class="center-play-btn" id="showcaseCenterPlayBtn" title="Play Video" data-cursor data-cursor-label="Play">
@@ -2563,16 +3006,17 @@
           </div>
         </div>
 
-                <!-- Section Video Playlist / Film Reel Gallery -->
-        <div class="showcase-playlist-container" id="showcasePlaylistContainer" style="display:none;">
-          <div class="playlist-header">
-            <div class="playlist-header-left">
-              <span class="kicker-mini" id="showcasePlaylistKicker">COMMERCIAL &amp; CREATIVE FILM REEL</span>
-              <h3 class="playlist-title" id="showcasePlaylistTitle">Featured Commercials &amp; Films</h3>
+                <!-- Video Gallery Grid (Rows with Names Below Thumbnails) -->
+        <div class="video-grid-section" id="showcaseVideoGridSection" style="display:none;">
+          <div class="video-grid-header">
+            <div>
+              <span class="kicker-mini">COMMERCIAL &amp; BRAND WORKS</span>
+              <h3 class="video-grid-title">Featured Films &amp; Commercials</h3>
+              <p class="video-grid-subtitle">Click any thumbnail to play in high-definition popup theater</p>
             </div>
-            <span class="playlist-count-pill" id="showcasePlaylistCount">7 Films</span>
+            <span class="video-grid-count" id="showcaseVideoGridCount">7 Films</span>
           </div>
-          <div class="video-cards-grid" id="showcasePlaylistGrid"></div>
+          <div class="video-gallery-grid" id="showcaseVideoGalleryGrid"></div>
         </div>
 
         <!-- Hint banner -->
@@ -2631,6 +3075,56 @@
     <button class="lightbox-close" id="showcaseLightboxClose" data-cursor data-cursor-label="Close">&times;</button>
     <div class="lightbox-content">
       <img src="" alt="Enlarged Render Still" class="lightbox-img" id="showcaseLightboxImg">
+    </div>
+  </div>
+  <!-- Big Video Cinema Popup Modal with Blurred Background -->
+  <div class="video-cinema-modal" id="videoCinemaModal" aria-hidden="true">
+    <div class="cinema-backdrop" id="cinemaBackdrop"></div>
+    
+    <div class="cinema-dialog is-portrait" id="cinemaDialog">
+      <div class="cinema-topbar">
+        <div class="cinema-title-wrap">
+          <span class="cinema-kicker" id="cinemaKicker">COMMERCIAL FILM</span>
+          <h3 class="cinema-title" id="cinemaTitle">Film Title</h3>
+        </div>
+        <div class="cinema-topbar-actions">
+          <span class="cinema-aspect-badge" id="cinemaAspectBadge">9:16 VERTICAL 4K</span>
+          <button type="button" class="cinema-close-btn" id="cinemaCloseBtn" title="Close (Esc)" data-cursor data-cursor-label="Close">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="cinema-stage" id="cinemaStage">
+        <video class="cinema-video" id="cinemaVideo" playsinline preload="auto"></video>
+
+        <div class="cinema-center-btn" id="cinemaCenterBtn" title="Play/Pause" data-cursor data-cursor-label="Play">
+          <svg id="cinemaCenterIconPlay" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <svg id="cinemaCenterIconPause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        </div>
+      </div>
+
+      <div class="cinema-controls-bar" id="cinemaControlsBar">
+        <button type="button" class="cinema-ctrl-btn" id="cinemaPlayPauseBtn" title="Play/Pause" data-cursor data-cursor-label="Play">
+          <svg id="cinemaIconPlay" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <svg id="cinemaIconPause" style="display:none;" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        </button>
+
+        <div class="cinema-scrubber" id="cinemaScrubber">
+          <div class="cinema-progress-fill" id="cinemaProgressFill"></div>
+        </div>
+
+        <span class="cinema-time-readout" id="cinemaTimeReadout">0:00 / 0:00</span>
+
+        <button type="button" class="cinema-ctrl-btn" id="cinemaMuteBtn" title="Mute/Unmute" data-cursor data-cursor-label="Audio">
+          <svg id="cinemaIconVol" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <svg id="cinemaIconMute" style="display:none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        </button>
+
+        <button type="button" class="cinema-ctrl-btn" id="cinemaFullscreenBtn" title="Fullscreen" data-cursor data-cursor-label="Fullscreen">
+          <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+      </div>
     </div>
   </div>
 </main>
@@ -3704,7 +4198,7 @@
         id: 'nebula',
         smallName: 'NEBULA',
         bigSection: '3D RENDER',
-        year: '2026 â€¢ Real-Time Lighting Study',
+        year: '2026  -  Real-Time Lighting Study',
         discipline: 'Environment Art & Lighting',
         role: '3D Generalist & Lighting Lead',
         client: 'Internal Study / Spec Film',
@@ -3734,7 +4228,7 @@
         id: 'pulse',
         smallName: 'PULSE',
         bigSection: 'MOTION GRAPHICS',
-        year: '2026 â€¢ Broadcast Motion System',
+        year: '2026  -  Broadcast Motion System',
         discipline: 'Motion Design & Direction',
         role: 'Motion Director & Animator',
         client: 'Live Event Brand & Festival',
@@ -3764,10 +4258,10 @@
         id: 'genesis',
         smallName: 'GENESIS',
         bigSection: 'AI VIDEO',
-        year: '2026 â€¢ Commercial Direction & Neural Pipeline',
+        year: '2026  -  Commercial Direction & Neural Pipeline',
         discipline: 'AI Video & Neural Direction',
         role: 'AI Creative Strategist & Video Producer',
-        client: 'Seematti â€¢ Keerthi Nirmal â€¢ Milou',
+        client: 'Seematti  -  Keerthi Nirmal  -  Milou',
         tagline: 'A premier suite of 7 commercial AI films, digital fashion visualizers, and kinetic brand narratives crafted with neural diffusion and cinema-grade direction.',
         video: 'videos/ai videos/Seematti_valentines_day_ai_video.mp4',
         poster: 'images/projects/genesis-thumb.jpg',
@@ -3775,7 +4269,7 @@
         videos: [
           {
             id: 'seematti-vday',
-            title: "Seematti â€” Valentine's Day Special Campaign",
+            title: "Seematti  -  Valentine's Day Special Campaign",
             client: 'Seematti',
             category: 'Commercial Fashion Film',
             tag: 'Fashion Narrative',
@@ -3784,7 +4278,7 @@
           },
           {
             id: 'milou-childhood',
-            title: 'Milou â€” The Art of Creating Childhood',
+            title: 'Milou  -  The Art of Creating Childhood',
             client: 'Milou',
             category: 'Brand Film & Storytelling',
             tag: 'Brand Story',
@@ -3793,7 +4287,7 @@
           },
           {
             id: 'seematti-saree',
-            title: 'Seematti â€” E-Commerce AI Saree Showcase',
+            title: 'Seematti  -  E-Commerce AI Saree Showcase',
             client: 'Seematti',
             category: 'Digital Fashion AI',
             tag: 'E-Commerce Visualizer',
@@ -3802,7 +4296,7 @@
           },
           {
             id: 'seematti-couture',
-            title: 'Seematti â€” Haute Couture Campaign Film',
+            title: 'Seematti  -  Haute Couture Campaign Film',
             client: 'Seematti',
             category: 'Haute Couture Commercial',
             tag: 'Haute Couture',
@@ -3811,7 +4305,7 @@
           },
           {
             id: 'seematti-carousel',
-            title: 'Seematti â€” Dynamic Carousel Campaign',
+            title: 'Seematti  -  Dynamic Carousel Campaign',
             client: 'Seematti',
             category: 'Social-First Motion',
             tag: 'Social Campaign',
@@ -3820,7 +4314,7 @@
           },
           {
             id: 'keerthi-skyfall',
-            title: 'Keerthi Nirmal â€” Skyfall Viral Trend',
+            title: 'Keerthi Nirmal  -  Skyfall Viral Trend',
             client: 'Keerthi Nirmal',
             category: 'Viral VFX & Brand Concept',
             tag: 'Viral Concept',
@@ -3829,7 +4323,7 @@
           },
           {
             id: 'keerthi-jeep',
-            title: 'Keerthi â€” Jeep Rhythm & Dance Concept',
+            title: 'Keerthi  -  Jeep Rhythm & Dance Concept',
             client: 'Keerthi',
             category: 'Stylized Social Motion',
             tag: 'Social Motion',
@@ -3859,7 +4353,7 @@
         id: 'aether',
         smallName: 'AETHER',
         bigSection: '3D ANIMATION',
-        year: '2026 â€¢ Character Rig & Motion Study',
+        year: '2026  -  Character Rig & Motion Study',
         discipline: 'Character Animation & Rigging',
         role: 'Character Animator & Modeler',
         client: 'Sci-Fi Short Pitch',
@@ -3889,7 +4383,7 @@
         id: 'fragment',
         smallName: 'FRAGMENT',
         bigSection: 'VFX',
-        year: '2026 â€¢ Physics & Compositing',
+        year: '2026  -  Physics & Compositing',
         discipline: 'Simulation & VFX Compositing',
         role: 'VFX Artist & Compositor',
         client: 'Concept Trailer Studio',
@@ -3919,7 +4413,7 @@
         id: 'terraform',
         smallName: 'TERRAFORM',
         bigSection: 'UNREAL ENGINE',
-        year: '2026 â€¢ Photorealistic Biome',
+        year: '2026  -  Photorealistic Biome',
         discipline: 'Environment Design & Biomes',
         role: 'World Builder & UE5 Specialist',
         client: 'Next-Gen Game Environment',
@@ -4003,7 +4497,7 @@
       });
 
       // Video & Poster
-      const defaultPosterSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs><radialGradient id="rg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%231e243d"/><stop offset="60%" stop-color="%23121524"/><stop offset="100%" stop-color="%23090a12"/></radialGradient></defs><rect width="1920" height="1080" fill="url(%23rg)"/><circle cx="960" cy="540" r="380" fill="%2333e6ff" opacity="0.06"/><rect x="80" y="80" width="1760" height="920" fill="none" stroke="%2333e6ff" stroke-width="2" opacity="0.2" rx="20"/><text x="960" y="470" font-family="sans-serif" font-weight="900" font-size="88" fill="%23ffffff" text-anchor="middle" letter-spacing="4">' + p.bigSection + '</text><text x="960" y="560" font-family="sans-serif" font-weight="700" font-size="30" fill="%237ff0ff" text-anchor="middle" letter-spacing="6">' + p.smallName + ' â€¢ 4K SHOWCASE</text><text x="960" y="650" font-family="sans-serif" font-size="22" fill="%239aa0b8" text-anchor="middle">Click to Play â€¢ Place real video in ' + p.video + '</text></svg>';
+      const defaultPosterSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs><radialGradient id="rg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%231e243d"/><stop offset="60%" stop-color="%23121524"/><stop offset="100%" stop-color="%23090a12"/></radialGradient></defs><rect width="1920" height="1080" fill="url(%23rg)"/><circle cx="960" cy="540" r="380" fill="%2333e6ff" opacity="0.06"/><rect x="80" y="80" width="1760" height="920" fill="none" stroke="%2333e6ff" stroke-width="2" opacity="0.2" rx="20"/><text x="960" y="470" font-family="sans-serif" font-weight="900" font-size="88" fill="%23ffffff" text-anchor="middle" letter-spacing="4">' + p.bigSection + '</text><text x="960" y="560" font-family="sans-serif" font-weight="700" font-size="30" fill="%237ff0ff" text-anchor="middle" letter-spacing="6">' + p.smallName + '  -  4K SHOWCASE</text><text x="960" y="650" font-family="sans-serif" font-size="22" fill="%239aa0b8" text-anchor="middle">Click to Play  -  Place real video in ' + p.video + '</text></svg>';
 
       showcaseVideo.poster = defaultPosterSvg;
       showcaseVideo.src = p.video;
@@ -4014,92 +4508,69 @@
       document.getElementById('showcaseExpectedVideo').textContent = p.video;
       document.getElementById('showcaseExpectedThumb').textContent = p.poster;
 
-      // Video Playlist / Film Reel Gallery
-      const playlistContainer = document.getElementById('showcasePlaylistContainer');
-      const playlistGrid = document.getElementById('showcasePlaylistGrid');
+      // Video Grid Gallery with First-Frame Thumbnails & Names Below
+      const showcaseVideoGridSection = document.getElementById('showcaseVideoGridSection');
+      const showcaseVideoGalleryGrid = document.getElementById('showcaseVideoGalleryGrid');
+      const showcaseVideoGridCount = document.getElementById('showcaseVideoGridCount');
       const hintBanner = document.getElementById('showcaseHintBanner');
-      const playingFilmLabel = document.getElementById('showcasePlayingFilmTitle');
 
       if (p.videos && p.videos.length > 0) {
-        if (playlistContainer) playlistContainer.style.display = 'block';
+        // In AI Video section, hide single theater player and show clean video rows grid
+        if (showcaseTheater) showcaseTheater.style.display = 'none';
+        if (showcaseVideoGridSection) showcaseVideoGridSection.style.display = 'block';
         if (hintBanner) hintBanner.style.display = 'none';
-        const countPill = document.getElementById('showcasePlaylistCount');
-        if (countPill) countPill.textContent = p.videos.length + ' Films Available';
+        if (showcaseVideoGridCount) showcaseVideoGridCount.textContent = p.videos.length + ' Commercial Films';
 
-        if (playlistGrid) {
-          playlistGrid.innerHTML = '';
+        if (showcaseVideoGalleryGrid) {
+          showcaseVideoGalleryGrid.innerHTML = '';
           p.videos.forEach((vid, vIdx) => {
-            const vCard = document.createElement('div');
-            vCard.className = 'video-card' + (vIdx === 0 ? ' active' : '');
-            vCard.setAttribute('data-cursor', '');
-            vCard.setAttribute('data-cursor-label', 'Watch');
+            const card = document.createElement('div');
+            const isLandscape = vid.aspect === '16:9';
+            card.className = 'video-thumb-card' + (isLandscape ? ' is-landscape' : '');
+            card.setAttribute('data-cursor', '');
+            card.setAttribute('data-cursor-label', 'Watch');
 
-            const numStr = String(vIdx + 1).padStart(2, '0');
             const encodedFile = encodeURI(vid.file);
+            const aspectLabel = isLandscape ? '16:9' : '9:16';
 
-            vCard.innerHTML = `
-              <div class="video-card-thumb-wrap">
-                <div class="video-card-badge-row">
-                  <span class="video-num-badge">FILM ${numStr}</span>
-                  <span class="video-status-badge">${vIdx === 0 ? 'NOW PLAYING' : 'PLAY FILM'}</span>
-                </div>
-                <div class="video-card-play-overlay">
-                  <div class="video-card-play-icon">
-                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                  </div>
+            card.innerHTML = `
+              <div class="thumb-frame-wrap">
+                <video class="thumb-first-frame" src="${encodedFile}#t=0.001" preload="metadata" muted playsinline disablePictureInPicture></video>
+                <span class="thumb-aspect-tag">${aspectLabel}</span>
+                <div class="thumb-play-btn">
+                  <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </div>
               </div>
-              <div class="video-card-info">
-                <div class="video-card-tags">
-                  <span class="video-tag-pill">${vid.tag}</span>
-                  <span class="video-client-pill">${vid.client}</span>
+              <div class="thumb-details">
+                <h4 class="thumb-title">${vid.title}</h4>
+                <div class="thumb-meta-row">
+                  <span class="thumb-client">${vid.client}</span>
+                  <span class="thumb-tag">${vid.tag}</span>
                 </div>
-                <h4 class="video-card-title">${vid.title}</h4>
-                <p class="video-card-desc">${vid.desc}</p>
               </div>
             `;
 
-            // Click loads into main theater player
-            vCard.addEventListener('click', () => {
-              if (sound.ready()) sound.glint();
-              showcaseVideo.src = encodedFile;
-              showcaseVideo.load();
-              showcaseVideo.play().then(() => {
-                showcaseTheater.classList.add('playing');
-                showcasePlayIcon.style.display = 'none';
-                showcasePauseIcon.style.display = 'block';
-              }).catch(() => {});
-
-              if (playingFilmLabel) {
-                playingFilmLabel.textContent = vid.title;
-              }
-
-              // Update active states
-              playlistGrid.querySelectorAll('.video-card').forEach(c => {
-                c.classList.remove('active');
-                const badge = c.querySelector('.video-status-badge');
-                if (badge) badge.textContent = 'PLAY FILM';
+            // Explicitly force first-frame painting on loadeddata
+            const vThumb = card.querySelector('video');
+            if (vThumb) {
+              vThumb.addEventListener('loadeddata', () => {
+                try { vThumb.currentTime = 0.001; } catch (err) {}
               });
-              vCard.classList.add('active');
-              const activeBadge = vCard.querySelector('.video-status-badge');
-              if (activeBadge) activeBadge.textContent = 'NOW PLAYING';
+            }
 
-              // Smoothly scroll theater into focus
-              showcaseTheater.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Click opens big cinema popup player with blurred background
+            card.addEventListener('click', () => {
+              if (sound.ready()) sound.press();
+              openCinemaModal(vid);
             });
 
-            playlistGrid.appendChild(vCard);
+            showcaseVideoGalleryGrid.appendChild(card);
           });
         }
-
-        // Set default playing film title
-        if (playingFilmLabel && p.videos[0]) {
-          playingFilmLabel.textContent = p.videos[0].title;
-        }
       } else {
-        if (playlistContainer) playlistContainer.style.display = 'none';
+        if (showcaseTheater) showcaseTheater.style.display = '';
+        if (showcaseVideoGridSection) showcaseVideoGridSection.style.display = 'none';
         if (hintBanner) hintBanner.style.display = 'flex';
-        if (playingFilmLabel) playingFilmLabel.textContent = p.smallName + ' â€¢ 4K SHOWCASE';
       }
 
       // Story
@@ -4128,9 +4599,9 @@
         const card = document.createElement('div');
         card.className = 'still-card';
 
-        const stillSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23171a2b"/><stop offset="50%" stop-color="%231e2238"/><stop offset="100%" stop-color="%2310121c"/></linearGradient></defs><rect width="800" height="450" fill="url(%23g)"/><circle cx="400" cy="225" r="140" fill="%2333e6ff" opacity="0.08"/><text x="50%" y="46%" font-family="sans-serif" font-weight="700" font-size="28" fill="%23f3f4f8" text-anchor="middle" dominant-baseline="middle">' + p.smallName + ' â€¢ Still ' + (idx + 1) + '</text><text x="50%" y="58%" font-family="sans-serif" font-weight="600" font-size="16" fill="%237ff0ff" text-anchor="middle" dominant-baseline="middle">' + s.caption + '</text></svg>';
+        const stillSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23171a2b"/><stop offset="50%" stop-color="%231e2238"/><stop offset="100%" stop-color="%2310121c"/></linearGradient></defs><rect width="800" height="450" fill="url(%23g)"/><circle cx="400" cy="225" r="140" fill="%2333e6ff" opacity="0.08"/><text x="50%" y="46%" font-family="sans-serif" font-weight="700" font-size="28" fill="%23f3f4f8" text-anchor="middle" dominant-baseline="middle">' + p.smallName + '  -  Still ' + (idx + 1) + '</text><text x="50%" y="58%" font-family="sans-serif" font-weight="600" font-size="16" fill="%237ff0ff" text-anchor="middle" dominant-baseline="middle">' + s.caption + '</text></svg>';
 
-        card.innerHTML = '<img src="' + stillSvg + '" alt="' + s.caption + '" class="still-img"><div class="still-overlay"><h5>' + s.caption + '</h5><span>' + s.tag + ' â€¢ Inspect Fullscreen</span></div>';
+        card.innerHTML = '<img src="' + stillSvg + '" alt="' + s.caption + '" class="still-img"><div class="still-overlay"><h5>' + s.caption + '</h5><span>' + s.tag + '  -  Inspect Fullscreen</span></div>';
 
         card.addEventListener('click', () => {
           if (sound.ready()) sound.press();
@@ -4326,16 +4797,202 @@
       }
     });
 
-    // Close on Escape key
+    // Close on Escape key (handles Cinema Modal -> Lightbox -> Showcase View)
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape'){
-        if (showcaseLightbox.classList.contains('active')){
+        if (typeof videoCinemaModal !== 'undefined' && videoCinemaModal.classList.contains('active')){
+          closeCinemaModal();
+        } else if (showcaseLightbox && showcaseLightbox.classList.contains('active')){
           showcaseLightbox.classList.remove('active');
-        } else if (showcaseView.classList.contains('active')){
+        } else if (showcaseView && showcaseView.classList.contains('active')){
           closeShowcase();
         }
       }
     });
+
+    // ============================================================
+    // CINEMA POPUP MODAL (Blurred Background, 9:16 / 16:9 Adaptive & Fullscreen)
+    // ============================================================
+    const videoCinemaModal = document.getElementById('videoCinemaModal');
+    const cinemaBackdrop = document.getElementById('cinemaBackdrop');
+    const cinemaDialog = document.getElementById('cinemaDialog');
+    const cinemaCloseBtn = document.getElementById('cinemaCloseBtn');
+    const cinemaVideo = document.getElementById('cinemaVideo');
+    const cinemaStage = document.getElementById('cinemaStage');
+    const cinemaTitle = document.getElementById('cinemaTitle');
+    const cinemaKicker = document.getElementById('cinemaKicker');
+    const cinemaAspectBadge = document.getElementById('cinemaAspectBadge');
+    const cinemaCenterBtn = document.getElementById('cinemaCenterBtn');
+    const cinemaCenterIconPlay = document.getElementById('cinemaCenterIconPlay');
+    const cinemaCenterIconPause = document.getElementById('cinemaCenterIconPause');
+    const cinemaPlayPauseBtn = document.getElementById('cinemaPlayPauseBtn');
+    const cinemaIconPlay = document.getElementById('cinemaIconPlay');
+    const cinemaIconPause = document.getElementById('cinemaIconPause');
+    const cinemaScrubber = document.getElementById('cinemaScrubber');
+    const cinemaProgressFill = document.getElementById('cinemaProgressFill');
+    const cinemaTimeReadout = document.getElementById('cinemaTimeReadout');
+    const cinemaMuteBtn = document.getElementById('cinemaMuteBtn');
+    const cinemaIconVol = document.getElementById('cinemaIconVol');
+    const cinemaIconMute = document.getElementById('cinemaIconMute');
+    const cinemaFullscreenBtn = document.getElementById('cinemaFullscreenBtn');
+
+    function openCinemaModal(vid){
+      if (!videoCinemaModal) return;
+      cinemaTitle.textContent = vid.title;
+      cinemaKicker.textContent = vid.client + '  -  ' + (vid.category || 'COMMERCIAL FILM');
+
+      // Aspect Ratio Adaptability (9:16 vs 16:9)
+      const isLandscape = vid.aspect === '16:9';
+      if (isLandscape) {
+        cinemaDialog.classList.remove('is-portrait');
+        cinemaDialog.classList.add('is-landscape');
+        cinemaAspectBadge.textContent = '16:9 WIDESCREEN 4K';
+      } else {
+        cinemaDialog.classList.remove('is-landscape');
+        cinemaDialog.classList.add('is-portrait');
+        cinemaAspectBadge.textContent = '9:16 VERTICAL 4K';
+      }
+
+      const encodedFile = encodeURI(vid.file);
+      cinemaVideo.src = encodedFile;
+      cinemaProgressFill.style.width = '0%';
+      cinemaTimeReadout.textContent = '0:00 / 0:00';
+
+      videoCinemaModal.classList.add('active');
+      videoCinemaModal.setAttribute('aria-hidden', 'false');
+
+      // Start playing
+      cinemaVideo.load();
+      cinemaVideo.play().then(() => {
+        cinemaStage.classList.add('playing');
+        cinemaCenterIconPlay.style.display = 'none';
+        cinemaCenterIconPause.style.display = 'block';
+        cinemaIconPlay.style.display = 'none';
+        cinemaIconPause.style.display = 'block';
+      }).catch(() => {});
+    }
+
+    function closeCinemaModal(){
+      if (!videoCinemaModal || !videoCinemaModal.classList.contains('active')) return;
+      cinemaVideo.pause();
+      cinemaVideo.currentTime = 0;
+      cinemaStage.classList.remove('playing');
+      cinemaCenterIconPlay.style.display = 'block';
+      cinemaCenterIconPause.style.display = 'none';
+      cinemaIconPlay.style.display = 'block';
+      cinemaIconPause.style.display = 'none';
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+
+      videoCinemaModal.classList.remove('active');
+      videoCinemaModal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Dynamic stream dimension inspection for exact aspect adaptation
+    cinemaVideo.addEventListener('loadedmetadata', () => {
+      if (cinemaVideo.videoHeight > cinemaVideo.videoWidth) {
+        cinemaDialog.classList.remove('is-landscape');
+        cinemaDialog.classList.add('is-portrait');
+        cinemaAspectBadge.textContent = '9:16 VERTICAL 4K';
+      } else {
+        cinemaDialog.classList.remove('is-portrait');
+        cinemaDialog.classList.add('is-landscape');
+        cinemaAspectBadge.textContent = '16:9 WIDESCREEN 4K';
+      }
+      cinemaTimeReadout.textContent = '0:00 / ' + formatTime(cinemaVideo.duration);
+    });
+
+    function toggleCinemaPlay(){
+      if (cinemaVideo.paused || cinemaVideo.ended) {
+        cinemaVideo.play().then(() => {
+          cinemaStage.classList.add('playing');
+          cinemaCenterIconPlay.style.display = 'none';
+          cinemaCenterIconPause.style.display = 'block';
+          cinemaIconPlay.style.display = 'none';
+          cinemaIconPause.style.display = 'block';
+        }).catch(() => {});
+      } else {
+        cinemaVideo.pause();
+        cinemaStage.classList.remove('playing');
+        cinemaCenterIconPlay.style.display = 'block';
+        cinemaCenterIconPause.style.display = 'none';
+        cinemaIconPlay.style.display = 'block';
+        cinemaIconPause.style.display = 'none';
+      }
+    }
+
+    cinemaCenterBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleCinemaPlay();
+    });
+    cinemaPlayPauseBtn.addEventListener('click', toggleCinemaPlay);
+    cinemaStage.addEventListener('click', (e) => {
+      if (e.target === cinemaVideo || e.target === cinemaStage) {
+        toggleCinemaPlay();
+      }
+    });
+
+    cinemaVideo.addEventListener('timeupdate', () => {
+      if (!isNaN(cinemaVideo.duration) && cinemaVideo.duration > 0) {
+        const pct = (cinemaVideo.currentTime / cinemaVideo.duration) * 100;
+        cinemaProgressFill.style.width = pct + '%';
+        cinemaTimeReadout.textContent = formatTime(cinemaVideo.currentTime) + ' / ' + formatTime(cinemaVideo.duration);
+      }
+    });
+
+    cinemaVideo.addEventListener('ended', () => {
+      cinemaStage.classList.remove('playing');
+      cinemaCenterIconPlay.style.display = 'block';
+      cinemaCenterIconPause.style.display = 'none';
+      cinemaIconPlay.style.display = 'block';
+      cinemaIconPause.style.display = 'none';
+    });
+
+    function seekCinema(e){
+      const rect = cinemaScrubber.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (!isNaN(cinemaVideo.duration)) {
+        cinemaVideo.currentTime = pos * cinemaVideo.duration;
+      }
+    }
+
+    let isCinemaScrubbing = false;
+    cinemaScrubber.addEventListener('mousedown', (e) => {
+      isCinemaScrubbing = true;
+      seekCinema(e);
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (isCinemaScrubbing) seekCinema(e);
+    });
+    window.addEventListener('mouseup', () => {
+      isCinemaScrubbing = false;
+    });
+
+    cinemaMuteBtn.addEventListener('click', () => {
+      cinemaVideo.muted = !cinemaVideo.muted;
+      if (cinemaVideo.muted) {
+        cinemaIconVol.style.display = 'none';
+        cinemaIconMute.style.display = 'block';
+      } else {
+        cinemaIconVol.style.display = 'block';
+        cinemaIconMute.style.display = 'none';
+      }
+    });
+
+    cinemaFullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (cinemaDialog.requestFullscreen) cinemaDialog.requestFullscreen().catch(() => {});
+        else if (cinemaVideo.requestFullscreen) cinemaVideo.requestFullscreen().catch(() => {});
+        else if (cinemaVideo.webkitEnterFullscreen) cinemaVideo.webkitEnterFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    cinemaCloseBtn.addEventListener('click', closeCinemaModal);
+    cinemaBackdrop.addEventListener('click', closeCinemaModal);
 
     // Handle Browser Back / Forward buttons without reloading
     window.addEventListener('popstate', (e) => {
@@ -4348,22 +5005,35 @@
     });
 
     // Deep-link check on initial page load
+    let initialProject = 'nebula';
     if (location.hash.startsWith('#project=')){
       const pid = location.hash.replace('#project=', '');
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          const tile = document.querySelector('.project-tile[data-project-id="' + pid + '"]');
-          openShowcase(pid, tile);
-        }, 500);
-      });
+      if (typeof SHOWCASE_PROJECTS !== 'undefined' && SHOWCASE_PROJECTS[pid]) {
+        initialProject = pid;
+      }
     }
 
-        // Pre-populate showcase with initial project so nav switcher and content are ready
+    // Pre-populate showcase with initial project so nav switcher and content are ready
     try {
-      if (typeof SHOWCASE_PROJECTS !== 'undefined' && SHOWCASE_PROJECTS['nebula']){
-        renderShowcaseData(SHOWCASE_PROJECTS['nebula']);
+      if (typeof SHOWCASE_PROJECTS !== 'undefined' && SHOWCASE_PROJECTS[initialProject]){
+        renderShowcaseData(SHOWCASE_PROJECTS[initialProject]);
       }
     } catch (e) {}
+
+    function handleInitialDeepLink(){
+      if (location.hash.startsWith('#project=')){
+        const pid = location.hash.replace('#project=', '');
+        const tile = document.querySelector('.project-tile[data-project-id="' + pid + '"]');
+        openShowcase(pid, tile);
+      }
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive'){
+      handleInitialDeepLink();
+    } else {
+      window.addEventListener('DOMContentLoaded', handleInitialDeepLink);
+      window.addEventListener('load', handleInitialDeepLink);
+    }
     // Attach Click Event with Smooth Zoom-In on Project Tiles
     document.querySelectorAll('.project-tile').forEach(tile => {
       tile.addEventListener('click', (e) => {

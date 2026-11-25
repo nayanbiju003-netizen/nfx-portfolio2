@@ -2208,6 +2208,29 @@
     backdrop-filter: blur(8px);
     z-index: 2;
   }
+  .thumb-featured-tag{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #00f5d4 0%, #7b2cbf 100%);
+    color: #030712;
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.5);
+    z-index: 2;
+    text-transform: uppercase;
+  }
+  .video-thumb-card.is-featured{
+    border-color: rgba(0, 245, 212, 0.45);
+    box-shadow: 0 10px 30px -10px rgba(0, 245, 212, 0.25);
+  }
+  .video-thumb-card.is-featured:hover{
+    border-color: var(--cyan);
+    box-shadow: 0 18px 40px -10px rgba(0, 245, 212, 0.45);
+  }
   .thumb-play-btn{
     position: absolute;
     top: 50%;
@@ -4278,12 +4301,22 @@
         year: '2026  -  Commercial Direction & Neural Pipeline',
         discipline: 'AI Video & Neural Direction',
         role: 'AI Creative Strategist & Video Producer',
-        client: 'Seematti  -  Keerthi Nirmal  -  Milou  -  Skinowe',
-        tagline: 'A premier suite of 12 commercial AI films, digital fashion visualizers, and kinetic brand narratives crafted with neural diffusion and cinema-grade direction.',
-        video: 'videos/ai videos/Seematti_valentines_day_ai_video.mp4',
+        client: 'Skinowe • Seematti • Keerthi Nirmal • Milou',
+        tagline: 'A premier suite of 12 commercial AI films, luxury skincare visualizers, fashion campaigns, and kinetic brand narratives crafted with neural diffusion and cinema-grade direction.',
+        video: 'videos/ai videos/Skinowe reel body lotion yoshino cherry.mp4',
         poster: 'images/projects/genesis-thumb.jpg',
         tools: ['Higgsfield AI', 'Claude', 'ChatGPT', 'Premiere Pro', 'After Effects', 'DaVinci Resolve'],
         videos: [
+          {
+            id: 'skinowe-cherry-lotion',
+            title: 'Skinowe — Yoshino Cherry Body Lotion Commercial',
+            client: 'Skinowe',
+            category: 'Luxury Skincare AI Commercial',
+            tag: 'Featured Hero Film',
+            aspect: '9:16',
+            desc: 'Cinematic luxury skincare commercial film for Skinowe Yoshino Cherry Blossom body lotion, featuring photorealistic botanical petals, organic fluid dynamics, and high-fashion aesthetics.',
+            file: 'videos/ai videos/Skinowe reel body lotion yoshino cherry.mp4'
+          },
           {
             id: 'seematti-vday',
             title: "Seematti  -  Valentine's Day Special Campaign",
@@ -4357,15 +4390,6 @@
             file: 'videos/ai videos/Keerthi Nirmal_premam.mp4'
           },
           {
-            id: 'skinowe-cherry-lotion',
-            title: 'Skinowe  -  Yoshino Cherry Body Lotion Commercial',
-            client: 'Skinowe',
-            category: 'Beauty & Skincare Visualizer',
-            tag: 'Skincare Visualizer',
-            desc: 'Delicate sensory beauty commercial highlighting Yoshino cherry blossom aesthetics, fluid lotion micro-texture, and deep hydration physics.',
-            file: 'videos/ai videos/Skinowe reel body lotion yoshino cherry.mp4'
-          },
-          {
             id: 'skinowe-lipstick',
             title: 'Skinowe  -  3 Velvet Shades Lipstick Collection',
             client: 'Skinowe',
@@ -4395,14 +4419,15 @@
         ],
         story: [
           'The AI Video portfolio showcases end-to-end commercial production from generative prompt engineering and latent keyframing to studio color grading and sound design.',
-          'For commercial clients including Seematti, Keerthi Nirmal, Milou, and Skinowe, custom diffusion pipelines maintain strict brand identity, fabric and cosmetic micro-textures, and temporal stability across multi-shot sequences.'
+          'For commercial clients including Skinowe, Seematti, Keerthi Nirmal, and Milou, custom diffusion pipelines maintain strict brand identity, fluid dynamics, fabric micro-textures, and temporal stability across multi-shot sequences.'
         ],
         breakdown: [
           { title: 'Temporal Consistency & Character Rigidity', desc: 'Eliminated diffusion flickering and morphing through latent keyframing, multi-pass optical flow smoothing, and custom character seeds.' },
-          { title: 'Commercial Texture & Fabric Simulation', desc: 'Trained and guided generative models on ultra-high-resolution textile samples to authentically preserve silk sheen, zari threadwork, and drape physics.' },
+          { title: 'Commercial Texture & Fluid Simulation', desc: 'Trained and guided generative models on ultra-high-resolution cosmetic fluids and textile samples to authentically preserve botanical cherry blossoms, lotion droplets, and silk sheen.' },
           { title: 'Cinema Grade Post-Production', desc: 'Mastered in DaVinci Resolve and After Effects with custom grain profiles, depth-of-field optical defocusing, and sound design.' }
         ],
         stills: [
+          { caption: 'Skinowe Yoshino Cherry Botanical Hero', tag: 'Hero Commercial' },
           { caption: 'Seematti Bridal Character Still', tag: 'Commercial Frame' },
           { caption: 'Milou Childhood Nostalgia Pass', tag: 'Color Grade' },
           { caption: 'Zari Fabric Macro Detail', tag: 'Texture Resolution' }
@@ -4588,9 +4613,10 @@
           p.videos.forEach((vid, vIdx) => {
             const card = document.createElement('div');
             const isLandscape = vid.aspect === '16:9';
-            card.className = 'video-thumb-card' + (isLandscape ? ' is-landscape' : '');
+            const isFeatured = vIdx === 0;
+            card.className = 'video-thumb-card' + (isLandscape ? ' is-landscape' : '') + (isFeatured ? ' is-featured' : '');
             card.setAttribute('data-cursor', '');
-            card.setAttribute('data-cursor-label', 'Watch');
+            card.setAttribute('data-cursor-label', isFeatured ? 'Featured' : 'Watch');
 
             const encodedFile = encodeURI(vid.file);
             const aspectLabel = isLandscape ? '16:9' : '9:16';
@@ -4598,6 +4624,7 @@
             card.innerHTML = `
               <div class="thumb-frame-wrap">
                 <video class="thumb-first-frame" src="${encodedFile}#t=0.001" preload="metadata" muted playsinline disablePictureInPicture></video>
+                ${isFeatured ? '<span class="thumb-featured-tag">★ FEATURED</span>' : ''}
                 <span class="thumb-aspect-tag">${aspectLabel}</span>
                 <div class="thumb-play-btn">
                   <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
